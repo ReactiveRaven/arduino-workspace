@@ -37,53 +37,49 @@ Interruptions interruptions = Interruptions();
 // cannot be remapped to alternate pins.  For Arduino Uno,
 // Duemilanove, etc., pin 11 = MOSI, pin 12 = MISO, pin 13 = SCK.
 #define TFT_RST 8
-#define TFT_DC 11
-#define TFT_CS 12
+#define TFT_DC 9
+#define TFT_CS 10
 #define SD_CS 4
 #define TFT_BL 3
 #define SD_ChipSelectPin 4
 
 Adafruit_ILI9340 tft = Adafruit_ILI9340(TFT_CS, TFT_DC, TFT_RST);
 
+int orange = tft.Color565(255,100,0);
+int yellow = tft.Color565(255,153,0);
+
 int width;
 int height;
 
 void setup(void) {
 
-  // Serial.begin(9600);
-
-  // while (!Serial) ;
-
-  // Serial.println("OK");
-
-  sd.begin(SD_ChipSelectPin, SPI_FULL_SPEED);
-
   pinMode(TFT_BL, OUTPUT);
   digitalWrite(TFT_BL, HIGH);
+
+  sd.begin(SD_ChipSelectPin, SPI_FULL_SPEED);
+  
+  // SD.begin(SD_CS);
+
   tft.begin();
   Lcars lcars = Lcars(&tft);
-  
-  tmrpcm.speakerPin = 9;
-  tmrpcm.speakerPin2 = 5;
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(13, OUTPUT);
+  // tft.setRotation(3);
+  // tft.fillScreen(ILI9340_BLACK);
+  // width = tft.width();
+  // height = tft.height();
+  // lcarsBorderBits(width, height);
+  // tft.setCursor(60, 35);
+  // tft.println("Hello world");
 
+  // bmpDraw("dog.bmp", 0, 0);
+  
+  tmrpcm.speakerPin = 5;
   // tmrpcm.speakerPin2 = 3;
   
   tmrpcm.setVolume(6);
-  tmrpcm.setVolume(6, 1);
-
-  tmrpcm.play("2.wav");
   
-  tmrpcm.stopPlayback();
   tmrpcm.play("2.wav");
-  tmrpcm.play("1.wav", 1);
   // tmrpcm.play("1.wav", 1);
   tmrpcm.loop(true);
-  Serial.println("Setup complete");
 }
 
 void loop() {

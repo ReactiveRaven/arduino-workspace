@@ -26,7 +26,7 @@ Blog: https://tmrh20.blogspot.com/
 
    Override the default size of the buffers (MAX 254). There are 2 buffers, so memory usage will be double this number
    Defaults to 64bytes for Uno etc. 254 for Mega etc. note: In multi mode there are 4 buffers*/
-//#define buffSize 128  //must be an even number
+#define buffSize 128 //must be an even number
 
   /* Uncomment to run the SD card at full speed (half speed is default for standard SD lib)*/
 #define SD_FULLSPEED
@@ -39,21 +39,21 @@ Blog: https://tmrh20.blogspot.com/
 //#define DISABLE_SPEAKER2
 
   /* Use 8-bit TIMER2 - If using an UNO, Nano, etc and need TIMER1 for other things*/
-//#define USE_TIMER2
+// #define USE_TIMER2
 
 //#define debug
 /****************** ADVANCED USER DEFINES ********************************
    See https://github.com/TMRh20/TMRpcm/wiki for info on usage
 
    /* Use the SDFAT library from http://code.google.com/p/sdfatlib/            */
-//#define SDFAT
+#define SDFAT
 
    /* MULTI Track mode currently allows playback of 2 tracks at once          */
-//#define ENABLE_MULTI  //Using separate pins on a single 16-bit timer
+#define ENABLE_MULTI  //Using separate pins on a single 16-bit timer
 
    /* Enables 16-bit samples, which can be used for stereo playback, or to produce a
 	   pseudo 16-bit output.                                                   */
-//#define STEREO_OR_16BIT
+// #define STEREO_OR_16BIT
 
    /* In Normal single track mode, MODE2 will modify the behavior of STEREO or 16BIT output
         With MODE2 off, stereo tracks will be played using 2 pins, for 2 speakers in non-complimentary mode (pin to ground)
@@ -61,11 +61,12 @@ Blog: https://tmrh20.blogspot.com/
 	  In MULTI dual track mode, MODE2 will use a second timer for the second track.
 	    With MODE2 off, each track will use a separate pin, but the same timer
 	                                                                           */
-//#define MODE2  //Using separate 16-bit timers with up to 4 pins (Arduino Mega etc only)
+
+#define MODE2  //Using separate 16-bit timers with up to 4 pins (Arduino Mega etc only)
 
    /* The library uses two different ramping methods to prevent popping sounds
       when PWM is enabled or disabled. This option is autodetected unless defined here*/
-//#define rampMega
+// #define rampMega
 
    /* Initial implementation for recording of WAV files to SD card via a microphone or input connected to an analog pin
    SdFat library is recommended
