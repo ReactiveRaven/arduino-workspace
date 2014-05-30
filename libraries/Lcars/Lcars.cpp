@@ -3,7 +3,7 @@
 #include "Adafruit_ILI9340.h";
 #include <Interruptions.h>;
 #include "LcarsDisplay.h";
-#include "LcarsDisplay.h";
+#include "LcarsLed.h";
 
 Lcars::Lcars(Adafruit_ILI9340* tft)
 {
@@ -11,22 +11,77 @@ Lcars::Lcars(Adafruit_ILI9340* tft)
 	_posRadius = Lcars_B_Width / 2;
 	_negRadius = Lcars_B_Width / 4;
 	_interruptions = Interruptions();
-	begin();
 }
 
 void Lcars::begin() {
-	(*_tft).setRotation(3);
-  	(*_tft).fillScreen(Lcars_Color_Black);
   	_width = (*_tft).width();
   	_height = (*_tft).height() / 3 * 2;
   	_width3 = _width / 3;
   	_width32 = _width3 * 2;
-  	setMode(1);
+  	_geo.setTft(_tft);
+	_geo.setColor(Lcars_Color_GREEN);
+	_geo.setX(0);
+	_geo.setY(_height);
+	_geo.setPin(0);
+	_geo.setWidth(30);
+	_geo.setHeight(30);
+	_bio.setTft(_tft);
+	_bio.setColor(Lcars_Color_GREEN);
+	_bio.setX(60);
+	_bio.setY(_height);
+	_bio.setPin(0);
+	_bio.setWidth(30);
+	_bio.setHeight(30);
+	_met.setTft(_tft);
+	_met.setColor(Lcars_Color_GREEN);
+	_met.setX(30);
+	_met.setY(_height);
+	_met.setPin(0);
+	_met.setWidth(30);
+	_met.setHeight(30);
+
+	uint16_t chaserX = _width - 20;
+	uint16_t chaserY = (*_tft).height() - 60;
+
+	_ch1.setTft(_tft);
+	_ch1.setColor(Lcars_Color_RED);
+	_ch1.setX(chaserX);
+	_ch1.setY(chaserY);
+	_ch1.setPin(0);
+	_ch1.setWidth(20);
+	_ch1.setHeight(15);
+
+	_ch2.setTft(_tft);
+	_ch2.setColor(Lcars_Color_GREEN);
+	_ch2.setX(chaserX);
+	_ch2.setY(chaserY + 15);
+	_ch2.setPin(0);
+	_ch2.setWidth(20);
+	_ch2.setHeight(15);
+
+	_ch3.setTft(_tft);
+	_ch3.setColor(Lcars_Color_GREEN);
+	_ch3.setX(chaserX);
+	_ch3.setY(chaserY + 30);
+	_ch3.setPin(0);
+	_ch3.setWidth(20);
+	_ch3.setHeight(15);
+
+	_ch4.setTft(_tft);
+	_ch4.setColor(Lcars_Color_GREEN);
+	_ch4.setX(chaserX);
+	_ch4.setY(chaserY + 45);
+	_ch4.setPin(0);
+	_ch4.setWidth(20);
+	_ch4.setHeight(15);
+
+  	setMode(Lcars_Mode_Medical);
 }
 
 void Lcars::setMode(uint8_t mode) {
 	_mode = mode;
 	render();
+	// play(Lcars_Sound_Scan);
 }
 
 void Lcars::log(const char* message) {
@@ -36,6 +91,14 @@ void Lcars::log(const char* message) {
 void Lcars::log(unsigned int n) {
 	(*_tft).println(n, 10);
 }
+
+// void Lcars::play(uint8_t file) {
+// 	char name[30];
+// 	char ext[] = ".wav";
+// 	itoa(file, name, 10);
+// 	strcat(name, ext);
+// 	(*_tmrpcm).play(name);
+// }
 
 void Lcars::shoulder(
 	uint16_t x, uint16_t y,
@@ -110,7 +173,7 @@ void Lcars::render() {
 		_width32,
 		_height,
 		1,
-		"starfleet data p 8863"
+		"medical"
 	);
 	LcarsDisplay aux = LcarsDisplay(
 		this,
@@ -124,11 +187,41 @@ void Lcars::render() {
 	);
 	main.begin();
 	aux.begin();
+}
 
-	main.setColor(Lcars_Color_Brown);
-	aux.setColor(Lcars_Color_Orange);
+void Lcars::tick(unsigned long millis) {
+	// (*_tft).setCursor(30, _height);
+	// (*_tft).setTextColor(Lcars_Color_White, Lcars_Color_Black);
+	// (*_tft).println(millis);
+	uint16_t halfsecs = millis / 200;
+	uint8_t quadsecs = halfsecs % 4;
+	if (halfsecs % 4 == 0) {
+		_geo.on();
+		_ch4.on();
+	} else {
+		_geo.off();
+		_ch4.off();
+	}
+	if (halfsecs % 4 == 1) {
+		_met.on();
+		_ch3.on();
+	} else {
+		_met.off();
+		_ch3.off();
+	}
+	if (halfsecs % 4 == 2) {
+		_bio.on();
+		_ch2.on();
+	} else {
+		_bio.off();
+		_ch2.off();
+	}
 
-	log(strlen(aux.getName()));
+	if (halfsecs % 4 == 3) {
+		_ch1.on();
+	} else {
+		_ch1.off();
+	}
 }
 
 void Lcars::grid(

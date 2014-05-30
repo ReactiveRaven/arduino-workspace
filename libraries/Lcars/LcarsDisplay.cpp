@@ -77,12 +77,13 @@ void LcarsDisplay::renderShoulder() {
 	);
 
 	uint16_t cursorleft = _x + (left ? _width - _namewidth - Lcars_Bar_Height : Lcars_Bar_Height);
+	uint16_t cursortop  = _y + (top ? 0 : _height - Lcars_Bar_Height - Lcars_B_VSpacing);
 
-	(*_tft).fillRect(cursorleft - 2, _y, _namewidth + 4, 8, Lcars_Color_Black);
+	(*_tft).fillRect(cursorleft - 2, cursortop, _namewidth + 4, 8, Lcars_Color_Black);
 	(*_tft).setTextColor(_color);
 	(*_tft).setCursor(
 		cursorleft,
-		_y
+		cursortop
 	);
 	(*_lcars).log(_name);
 	(*_tft).setTextColor(Lcars_Color_White);

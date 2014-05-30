@@ -4,6 +4,8 @@
 #include <Adafruit_GFX.h>;
 #include "Adafruit_ILI9340.h";
 #include <Interruptions.h>;
+#include <TMRpcm.h> // =5246b
+#include "LcarsLed.h";
 
 #define Lcars_Color_Lavender      0x9CD9
 #define Lcars_Color_Purple        0x9CDF
@@ -41,6 +43,13 @@
 #define Lcars_Mode_Debug   1
 #define Lcars_Mode_Medical 2
 
+#define Lcars_Sound_Scan 1
+#define Lcars_Sound_Beep1 2
+#define Lcars_Sound_Beep2 3
+#define Lcars_Sound_Beep3 4
+#define Lcars_Sound_Beep4 5
+#define Lcars_Sound_Beep5 6
+
 class Lcars {
 	public:
 		Lcars(Adafruit_ILI9340* tft);
@@ -51,7 +60,9 @@ class Lcars {
 			log(const char* msg),
 		    log(unsigned int n),
 			shoulder(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t corner, uint16_t color),
-		    grid(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t xPeriod, uint8_t yPeriod, uint8_t xOffset, uint8_t yOffset, uint16_t color);
+		    grid(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t xPeriod, uint8_t yPeriod, uint8_t xOffset, uint8_t yOffset, uint16_t color),
+			play(uint8_t file),
+			tick(unsigned long millis);
 
 	    bool
 	    	isLeft(uint8_t corner),
@@ -64,6 +75,7 @@ class Lcars {
 		Interruptions _interruptions;
 		uint8_t _mode, _posRadius, _negRadius;
 		int16_t _width, _height, _width3, _width32;
+		LcarsLed _geo, _met, _bio, _ch1, _ch2, _ch4, _ch3;
 };
 
 #include "LcarsDisplay.h";

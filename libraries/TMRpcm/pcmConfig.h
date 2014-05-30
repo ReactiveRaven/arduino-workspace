@@ -46,7 +46,7 @@ Blog: https://tmrh20.blogspot.com/
    See https://github.com/TMRh20/TMRpcm/wiki for info on usage
 
    /* Use the SDFAT library from http://code.google.com/p/sdfatlib/            */
-#define SDFAT
+// #define SDFAT
 
    /* MULTI Track mode currently allows playback of 2 tracks at once          */
 #define ENABLE_MULTI  //Using separate pins on a single 16-bit timer
@@ -62,7 +62,7 @@ Blog: https://tmrh20.blogspot.com/
 	    With MODE2 off, each track will use a separate pin, but the same timer
 	                                                                           */
 
-#define MODE2  //Using separate 16-bit timers with up to 4 pins (Arduino Mega etc only)
+// #define MODE2  //Using separate 16-bit timers with up to 4 pins (Arduino Mega etc only)
 
    /* The library uses two different ramping methods to prevent popping sounds
       when PWM is enabled or disabled. This option is autodetected unless defined here*/

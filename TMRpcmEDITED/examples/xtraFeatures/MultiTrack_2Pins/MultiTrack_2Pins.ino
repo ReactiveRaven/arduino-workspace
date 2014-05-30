@@ -16,15 +16,15 @@ Steps:
 #include <SPI.h>
 #include <TMRpcm.h>
 
-#define SD_ChipSelectPin 53  //example uses hardware SS pin 53 on Mega2560
-//#define SD_ChipSelectPin 4  //using digital pin 4 on arduino nano 328, can use other pins
+//#define SD_ChipSelectPin 53  //example uses hardware SS pin 53 on Mega2560
+#define SD_ChipSelectPin 4  //using digital pin 4 on arduino nano 328, can use other pins
 
 TMRpcm audio;   // create an object for use in this sketch 
 
 void setup() {
   
-  audio.speakerPin = 11; //5,6,11 or 46 on Mega, 9 on Uno, Nano, etc
-  pinMode(12,OUTPUT);  //Pin pairs: 9,10 Mega: 5-2,6-7,11-12,46-45
+  audio.speakerPin = 9; //5,6,11 or 46 on Mega, 9 on Uno, Nano, etc
+  pinMode(10,OUTPUT);  //Pin pairs: 9,10 Mega: 5-2,6-7,11-12,46-45
   
   Serial.begin(115200);
   
